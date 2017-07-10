@@ -6,10 +6,16 @@ const express = require('express');
 const PORT = 8081;
 const HOST = '0.0.0.0';
 
+var request = require("request");
+
 // App
 const app = express();
+
 app.get('/', (req, res) => {
-  res.send('Hello world\n');
+  request("http://localhost:9000/api/person", function(error, response, body) {
+    // console.log(body);
+    res.send(body);
+  });
 });
 
 app.listen(PORT, HOST);
