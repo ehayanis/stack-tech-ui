@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        node 'Node 6.11.0'
-    }
     stages {
         stage ('NPM Build') {
             steps {
