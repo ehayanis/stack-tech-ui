@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
-    this.products = this._productService.getProductsFromData();
+    this.products = this._productService.getProductsFromApi();
   }
 
   showEditProductForm(product: Product) {

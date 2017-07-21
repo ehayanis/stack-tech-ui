@@ -2,10 +2,22 @@ import { Injectable } from '@angular/core';
 import { Product } from './product';
 import { PRODUCT_ITEMS } from './product-data';
 import { findIndex } from 'lodash';
+import { ProductData } from './product.data';
 
 @Injectable()
 export class ProductService {
-  private pItems = PRODUCT_ITEMS;
+  // private pItems = PRODUCT_ITEMS;
+  private pItems: Product[];
+
+  constructor(private _productData: ProductData) { }
+
+  getProductsFromApi(): Product[] {
+    this._productData.GetAll().subscribe((data:Product[]) => this.pItems = data,
+                error => console.log(error),
+                () => console.log('Get all Items complete'));
+    console.log(this.pItems);
+    return this.pItems
+  }
 
   getProductsFromData(): Product[] {
     console.log(this.pItems);
@@ -30,22 +42,3 @@ export class ProductService {
   }
 
 }
-
-  // getProductsFromService(): Product[] {
-  //   return [{
-  //   id: 1,
-  //   name: 'Scissors',
-  //   description: 'use this to cut stuff',
-  //   price: 4.99
-  // }, {
-  //   id: 2,
-  //   name: 'Steak Knives',
-  //   description: 'use this to eat food with',
-  //   price: 10.99
-  // }, {
-  //   id: 3,
-  //   name: 'Shot Glass',
-  //   description: 'use this to take shots',
-  //   price: 5.99
-  // }]
-  // }
