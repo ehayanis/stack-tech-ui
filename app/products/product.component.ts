@@ -24,6 +24,8 @@ export class ProductComponent implements OnInit {
 
   getProducts() {
     this.products = this._productService.getProductsFromApi();
+    console.log("OK");
+    console.log(this.products);
   }
 
   showEditProductForm(product: Product) {

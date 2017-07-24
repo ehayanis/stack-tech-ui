@@ -12,9 +12,18 @@ export class ProductService {
   constructor(private _productData: ProductData) { }
 
   getProductsFromApi(): Product[] {
-    this._productData.GetAll().subscribe((data:Product[]) => this.pItems = data,
-                error => console.log(error),
-                () => console.log('Get all Items complete'));
+  this._productData.GetAll().subscribe(
+    (data:Product[]) => this.pItems = data,
+    error => console.log(error),
+    //() => console.log('Get all Items complete'),
+    () => console.log(this.pItems)
+  );
+
+  /*  this._productData.GetAll().subscribe((data: Product[]) => {
+                console.log("OK");
+                console.log(data);
+                this.pItems = data;
+    }) */
     console.log(this.pItems);
     return this.pItems
   }
