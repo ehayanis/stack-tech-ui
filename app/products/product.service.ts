@@ -1,53 +1,28 @@
 import { Injectable } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/operator/map'
+import { Observable } from 'rxjs/Observable';
 import { Product } from './product';
-import { PRODUCT_ITEMS } from './product-data';
-import { findIndex } from 'lodash';
-import { ProductData } from './product.data';
+import { Configuration } from './product.constants';
 
 @Injectable()
 export class ProductService {
-  // private pItems = PRODUCT_ITEMS;
-  private pItems: Product[];
+  private actionUrl: string;
+  private headers: Headers;
 
-  constructor(private _productData: ProductData) { }
-
-  getProductsFromApi(): Product[] {
-  this._productData.GetAll().subscribe(
-    (data:Product[]) => this.pItems = data,
-    error => console.log(error),
-    //() => console.log('Get all Items complete'),
-    () => console.log(this.pItems)
-  );
-
-  /*  this._productData.GetAll().subscribe((data: Product[]) => {
-                console.log("OK");
-                console.log(data);
-                this.pItems = data;
-    }) */
-    console.log(this.pItems);
-    return this.pItems
+  constructor(private _http: Http, private _configuration: Configuration) {
+    this.actionUrl = _configuration.ServerWithApiUrl + 'product/';
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Accept', 'application/json');
   }
 
-  getProductsFromData(): Product[] {
-    console.log(this.pItems);
-    return this.pItems
+  public GetAll = (): Observable<Product[]> => {
+    return this._http.get(this.actionUrl).map((response: Response) => <Product[]>response.json());
   }
 
-  addProduct(product: Product) {
-    this.pItems.push(product);
-    console.log(this.pItems);
-  }
-
-  updateProduct(product: Product) {
-    let index = findIndex(this.pItems, (p: Product) => {
-      return p.id === product.id;
-    });
-    this.pItems[index] = product;
-  }
-
-  deleteProduct(product: Product) {
-    this.pItems.splice(this.pItems.indexOf(product), 1);
-    console.log(this.pItems);
+  public GetSingle = (id: number): Observable<Product> => {
+    return this._http.get(this.actionUrl + id).map((response: Response) => <Product>response.json());
   }
 
 }

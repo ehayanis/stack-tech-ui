@@ -22,10 +22,11 @@ export class ProductComponent implements OnInit {
     this.getProducts();
   }
 
-  getProducts() {
-    this.products = this._productService.getProductsFromApi();
-    console.log("OK");
-    console.log(this.products);
+  getProducts(): void {
+    this._productService.GetAll().subscribe(
+      (data:Product[]) => this.products = data,
+      error => console.log(error),
+      () => console.log('Get all Items complete'));
   }
 
   showEditProductForm(product: Product) {
@@ -46,7 +47,7 @@ export class ProductComponent implements OnInit {
     this.isNewForm = true;
   }
 
-  saveProduct(product: Product) {
+  /*saveProduct(product: Product) {
     if(this.isNewForm) {
       // add a new product
       this._productService.addProduct(product);
@@ -62,7 +63,7 @@ export class ProductComponent implements OnInit {
     this._productService.updateProduct(this.editedProduct);
     this.editProductForm = false;
     this.editedProduct = {};
-  }
+  }*/
 
   cancelNewProduct() {
     this.newProduct = {};

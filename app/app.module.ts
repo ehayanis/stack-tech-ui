@@ -10,7 +10,6 @@ import { ProductComponent } from './products/product.component';
 import { NavbarComponent } from './nav/nav.component';
 
 import { Configuration } from './products/product.constants';
-import { ProductData } from './products/product.data'
 import { ProductService } from './products/product.service';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { ProductService } from './products/product.service';
                           NavbarComponent
                           ],
   providers: [ ProductService,
-                  ProductData,
                   Configuration],
   bootstrap:    [ AppComponent ]
 })
